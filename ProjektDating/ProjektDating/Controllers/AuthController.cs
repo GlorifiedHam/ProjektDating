@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ProjektDating.Models;
 using System.Security.Claims;
+using MyFirstWebsite.CustomLibraries;
 
 namespace ProjektDating.Controllers
 {
@@ -55,7 +56,38 @@ namespace ProjektDating.Controllers
             authManager.SignOut("ApplicationCookie");
             return RedirectToAction("Login", "Auth");
         }
+
+        public ActionResult Registration()
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult Registration(Users model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new MainDbContext())
+                {
+                    var encryptedPassword = CustomEnrypt.Encrypt(model.Password);
+                    var user = db.Users.Create();
+                    user.Email = model.Email;
+                    user.Password = encryptedPassword;
+                    user.Country = model.Country;
+                    user.Name = model.Name;
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "One or more fields have been");
+            }
+            return View();
+        }
+
     }
 
-    
+
 }
