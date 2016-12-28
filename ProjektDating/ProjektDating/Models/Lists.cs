@@ -10,7 +10,7 @@ namespace ProjektDating.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        //[Required]
         public string Details { get; set; }
 
         public string Date_Posted { get; set; }
@@ -18,6 +18,7 @@ namespace ProjektDating.Models
         public string Date_Edited { get; set; }
         public string Time_Edited { get; set; }
         public string Public { get; set; }
+
 
         public int User_Id { get; set; }
     }

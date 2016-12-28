@@ -1,4 +1,4 @@
-﻿@model ProjektDating.Models.Lists
+﻿@model IEnumerable<ProjektDating.Models.Lists>
 @{
     ViewBag.Title = "Index";
     var username = User.Identity.Name;
@@ -9,8 +9,8 @@
 @using (Html.BeginForm())
 {
     <span>Enter new item: </span>
-    @Html.TextBoxFor(u => u.Details)<br />
-    <span> Public post?</span><input type="checkbox" name="check_public" /> <br />
+    <input type="text" name="new_item"/><br />
+    <span> Public post? </span><input type="checkbox" name="check_public" /> <br />
     <input type="submit" value="Add Item" />
 }
 <br /> 
@@ -28,15 +28,18 @@
         </tr>
     </thead>
        <tbody>
+           @foreach (var item in Model)
+           {
          <tr>
-             <td style ="text-align: center;"></td>;
-             <td style="text-align: center;"> </td>;
-             <td style="text-align: center;"></td>;
-             <td style="text-align: center;"> </td>;
-             <td style="text-align: center;"> <a href="@Url.Action("Edit", "Home")Edit"></a>/td>
-             <td style="text-align: center;"><a href="@Url.Action("Delete", "Home") Delete"></a>/td>
-             <td style ="text-align: center;"></td>
+             <td style ="text-align: center;">@Html.DisplayFor(modelItem => item.Id)</td>
+             <td style="text-align: center;">@Html.DisplayFor(modelItem => item.Details) </td>
+             <td style="text-align: center;">@Html.DisplayFor(modelItem => item.Time_Posted)</td>
+             <td style="text-align: center;">@Html.DisplayFor(modelItem => item.Time_Edited) </td>
+             <td style="text-align: center;"> <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.Id)">Edit</a></td>
+             <td style="text-align: center;"><a href="@Url.Action("Delete", "Home")/@Html.DisplayFor(modelItem => item.Id)">Delete</a></td>
+             <td style ="text-align: center;">@Html.DisplayFor(modelItem => item.Public)</td>
          </tr>
+           }
          <tbody>
 
 </table>
