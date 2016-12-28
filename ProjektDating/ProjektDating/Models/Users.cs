@@ -11,7 +11,6 @@ namespace ProjektDating.Models
     {
         [Key]
         public int Id { get; set; }
-
         [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
@@ -19,9 +18,7 @@ namespace ProjektDating.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
         public string Name { get; set; }
-
         public string Country { get; set; }
     }
 }
