@@ -10,7 +10,7 @@ using ProjektDating.CustomLibraries;
 namespace ProjektDating.Controllers
 {
     [AllowAnonymous]
-    public class AuthController : Controller
+    public class LoginController : Controller
     {
         // GET: Auth
         [HttpGet]
