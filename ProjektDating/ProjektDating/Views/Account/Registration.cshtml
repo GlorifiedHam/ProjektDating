@@ -1,4 +1,4 @@
-﻿@model ProjektDating.Models.Users
+﻿@model ProjektDating.Models.UserModel
 @{
     ViewBag.Title = "Registration";
 }
@@ -6,22 +6,50 @@
 
 @Html.ValidationSummary(true)
 
-@using (Html.BeginForm())
-{
-    @Html.LabelFor(u => u.Email)<br />
-    @Html.TextBoxFor(u => u.Email)<br />
-    @Html.LabelFor(u => u.Password)<br />
-    @Html.PasswordFor(u => u.Password)<br />
-    @Html.LabelFor(u => u.Name)<br />
-    @Html.TextBoxFor(u => u.Name)<br />
-    @Html.LabelFor(u => u.Country)<br />
-    @Html.PasswordFor(u => u.Country)<br />
+ @using (Html.BeginForm("Registration", "Home", null,FormMethod.Post, new { enctype = "multipart/form-data" }))
+ {
+
+    @Html.LabelFor(u => u.Username)<br />
+    @Html.TextBoxFor(u => u.Username)<br />
+
+ @Html.LabelFor(u => u.Email)<br />
+  @Html.TextBoxFor(u => u.Email)<br />
+
+@Html.LabelFor(u => u.NewPassword)<br />
+ @Html.PasswordFor(u => u.NewPassword)<br />
+
+@Html.LabelFor(u => u.ConfirmPassword)<br />
+@Html.PasswordFor(u => u.ConfirmPassword)<br />
+
+ @Html.LabelFor(u => u.FirstName)<br />
+ @Html.TextBoxFor(u => u.FirstName)<br />
+
+@Html.LabelFor(u => u.LastName)<br />
+@Html.TextBoxFor(u => u.LastName)<br />
+
+ @Html.LabelFor(u => u.Gender)<br />
+@Html.TextBoxFor(u => u.Gender)<br />
+
+@Html.LabelFor(u => u.Hidden)<br />
+@Html.TextBoxFor(u => u.Hidden)<br />
+
+@Html.LabelFor(u => u.LookingFor)<br />
+@Html.TextBoxFor(u => u.LookingFor)<br />
+
+@Html.LabelFor(u => u.Phone)<br />
+@Html.TextBoxFor(u => u.Phone)<br />
+
+@Html.LabelFor(u => u.PersonalNumber)<br />
+@Html.TextBoxFor(u => u.PersonalNumber)<br />
+
+<div class="form-group">
+    @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <input type="file" id="Avatar" name="upload" />
+    </div>
+</div>
 
 
     <p><button type="submit">Register</button></p>
-
-}
-
-
-
-
+  
+ }
