@@ -12,7 +12,7 @@ namespace ProjektDating.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        // GET: Auth
+        // GET: Account
         [HttpGet]
         public ActionResult Index()
         {
@@ -27,7 +27,7 @@ namespace ProjektDating.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Users model)
+        public ActionResult Login(UserModel model)
         {
             if (!ModelState.IsValid) //Checks if input fields have the correct format
             {
@@ -36,8 +36,8 @@ namespace ProjektDating.Controllers
 
             using (var db = new MainDbContext())
             {
-                var emailCheck = db.Users.FirstOrDefault(u => u.Email == model.Email);
-                var getPassword = db.Users.Where(u => u.Email == model.Email).Select(u => u.Password);
+                var emailCheck = db.userModel.FirstOrDefault(u => u.Email == model.Email);
+                var getPassword = db.userModel.Where(u => u.Email == model.Email).Select(u => u.NewPassword);
                 var materializePassword = getPassword.ToList();
                 var password = materializePassword[0];
                 var decryptedPassword = CustomDecrypt.Decrypt(password);
@@ -64,9 +64,9 @@ namespace ProjektDating.Controllers
                         "ApplicationCookie");
 
                     var ctx = Request.GetOwinContext();
-                    var authManager = ctx.Authentication;
+                    var accountManager = ctx.Authentication;
 
-                    authManager.SignIn(identity);
+                    accountManager.SignIn(identity);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -79,10 +79,10 @@ namespace ProjektDating.Controllers
         public ActionResult Logout()
         {
             var ctx = Request.GetOwinContext();
-            var authManager = ctx.Authentication;
+            var accountManager = ctx.Authentication;
 
-            authManager.SignOut("ApplicationCookie");
-            return RedirectToAction("Login", "Auth");
+            accountManager.SignOut("ApplicationCookie");
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult Registration()
@@ -91,22 +91,44 @@ namespace ProjektDating.Controllers
         }
 
         [HttpPost]
-        public ActionResult Registration(Users model)
+        public ActionResult Registration(UserModel account, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
+               
                 using (var db = new MainDbContext())
                 {
-                    var queryUser = db.Users.FirstOrDefault(u => u.Email == model.Email);
+                    var queryUser = db.userModel.FirstOrDefault(u => u.Username == account.Username);
                     if (queryUser == null)
                     {
-                        var encryptedPassword = CustomEnrypt.Encrypt(model.Password);
-                        var user = db.Users.Create();
-                        user.Email = model.Email;
-                        user.Password = encryptedPassword;
-                        user.Country = model.Country;
-                        user.Name = model.Name;
-                        db.Users.Add(user);
+                        var encryptedNewPassword = CustomEnrypt.Encrypt(account.NewPassword);
+                        var encryptedConfirmPassword = CustomEnrypt.Encrypt(account.ConfirmPassword);
+                        var user = db.userModel.Create();
+                        if (upload != null && upload.ContentLength > 0)
+                        {
+                            var avatar = new File
+                            {
+                                FileName = System.IO.Path.GetFileName(upload.FileName),
+                                FileType = FileType.Avatar,
+                                ContentType = upload.ContentType
+                            };
+                            using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                            {
+                                avatar.Content = reader.ReadBytes(upload.ContentLength);
+                            }
+                            user.Files = new List<File> { avatar };
+                        }
+                        user.Username = account.Username;
+                        user.Email = account.Email;
+                        user.NewPassword = encryptedNewPassword;
+                        user.ConfirmPassword = encryptedConfirmPassword;
+                        user.FirstName = account.FirstName;
+                        user.LastName = account.LastName;
+                        user.Hidden = account.Hidden;
+                        user.Gender = account.Gender;
+                        user.LookingFor = account.LookingFor;
+                        user.PersonalNumber = account.PersonalNumber;
+                        db.userModel.Add(user);
                         db.SaveChanges();
                     }
                     else

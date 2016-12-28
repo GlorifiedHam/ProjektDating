@@ -148,8 +148,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MainDbContext.cs" />
+    <Compile Include="Models\File.cs" />
+    <Compile Include="Models\FileType.cs" />
     <Compile Include="Models\Lists.cs" />
-    <Compile Include="Models\Users.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

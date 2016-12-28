@@ -17,7 +17,8 @@ namespace ProjektDating
         {
 
         }
-        public DbSet<Users> Users { get; set; }
+        public DbSet<UserModel> userModel { get; set; }
+        public DbSet<File> Files { get; set; }
 
         public DbSet<Lists> Lists { get; set; }
 
