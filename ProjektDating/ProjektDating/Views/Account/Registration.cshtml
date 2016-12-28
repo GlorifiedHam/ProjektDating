@@ -6,7 +6,7 @@
 
 @Html.ValidationSummary(true)
 
- @using (Html.BeginForm("Registration", "Home", null,FormMethod.Post, new { enctype = "multipart/form-data" }))
+ @using (Html.BeginForm("Registration", "Account", null,FormMethod.Post, new { enctype = "multipart/form-data" }))
  {
 
     @Html.LabelFor(u => u.Username)<br />
