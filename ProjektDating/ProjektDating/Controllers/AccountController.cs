@@ -36,30 +36,20 @@ namespace ProjektDating.Controllers
 
             using (var db = new MainDbContext())
             {
-                var emailCheck = db.userModel.FirstOrDefault(u => u.Email == model.Email);
-                var getPassword = db.userModel.Where(u => u.Email == model.Email).Select(u => u.NewPassword);
+                var emailCheck = db.userModel.FirstOrDefault(u => u.Username == model.Username);
+                var getPassword = db.userModel.Where(u => u.Username == model.Username).Select(u => u.NewPassword);
                 var materializePassword = getPassword.ToList();
                 var password = materializePassword[0];
                 var decryptedPassword = CustomDecrypt.Decrypt(password);
 
-                if (model.Email != null && model.Password == decryptedPassword)
+                if (model.Username != null && model.NewPassword == decryptedPassword)
                 {
-                    var getName = db.Users.Where(u => u.Email == model.Email).Select(u => u.Name);
-                    var materializeName = getName.ToList();
-                    var name = materializeName[0];
-
-                    var getCountry = db.Users.Where(u => u.Email == model.Email).Select(u => u.Country);
-                    var materializeCountry = getCountry.ToList();
-                    var country = materializeCountry[0];
-
-                    var getEmail = db.Users.Where(u => u.Email == model.Email).Select(u => u.Email);
-                    var materializeEmail = getEmail.ToList();
-                    var email = materializeEmail[0];
-
+                    var getUserName = db.userModel.Where(u => u.Username == model.Username).Select(u => u.Username);
+                    var materializeUsername = getUserName.ToList();
+                    var username = materializeUsername[0];
+                    
                     var identity = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.Name, name),
-                    new Claim(ClaimTypes.Email, email),
-                    new Claim(ClaimTypes.Country, country)
+                    new Claim(ClaimTypes.Name, username),    
                 },
                         "ApplicationCookie");
 
@@ -72,7 +62,7 @@ namespace ProjektDating.Controllers
                 }
             }
 
-            ModelState.AddModelError("", "Invalid email or password");
+            ModelState.AddModelError("", "Invalid username or password");
             return View(model);
         }
 
