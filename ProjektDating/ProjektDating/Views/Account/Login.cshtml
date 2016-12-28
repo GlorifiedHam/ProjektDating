@@ -1,25 +1,22 @@
-﻿@model ProjektDating.Models.Users
+﻿@model ProjektDating.Models.UserModel
 @{
     ViewBag.Title = "Login";
 }
 
 <h2>Log In</h2>
-
+<p>@Html.ActionLink("Click here to view the public list", "Index")</p>
 @Html.ValidationSummary(true)
 
 @using (Html.BeginForm())
 {
-    @Html.LabelFor(u => u.Email)<br/>
-    @Html.TextBoxFor(u => u.Email)<br />
-    @Html.LabelFor(u => u.Password)<br />
-    @Html.PasswordFor(u => u.Password)<br />
-    @Html.LabelFor(u => u.Name)<br />
-    @Html.TextBoxFor(u => u.Name)<br />
-    @Html.LabelFor(u => u.Country)<br />
-    @Html.PasswordFor(u => u.Country)<br />
+    @Html.LabelFor(u => u.Username)<br/>
+    @Html.TextBoxFor(u => u.Username)<br />
+    @Html.LabelFor(u => u.NewPassword)<br />
+    @Html.PasswordFor(u => u.NewPassword)<br />
+    
 
 
-    <p><button type="submit">Register</button></p>
+    <p><button type="submit">Login</button></p>
 
 
 }
