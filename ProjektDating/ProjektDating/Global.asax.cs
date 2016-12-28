@@ -14,7 +14,7 @@ using System.Data.Entity;
         protected void Application_Start()
         {
 
-            Database.SetInitializer<MainDbContext>(null);
+            //Database.SetInitializer<MainDbContext>(null);
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
