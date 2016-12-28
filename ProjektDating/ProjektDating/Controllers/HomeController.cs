@@ -37,12 +37,13 @@ namespace ProjektDating.Controllers
                         dbList.Date_Posted = dateToday;
                         dbList.Time_Posted = timeToday;
                         dbList.User_Id = userId[0];
-                        if (check_public != null) { dbList.Public = "YES"; }
+                        if (dbList.Public != null) { dbList.Public = "YES"; }
                         else { dbList.Public = "NO"; }
                         db.Lists.Add(dbList);
                         db.SaveChanges();
                     
                 }
+                
             }
             else
             {
