@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ProjektDating.CustomLibraries
-{
+﻿
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -15,7 +9,7 @@ namespace ProjektDating.CustomLibraries
     using System.Text;
     using System.Web;
 
-    namespace MyFirstWebsite.CustomLibraries
+    namespace ProjektDating.CustomLibraries
     {
         public class CustomDecrypt
         {
@@ -42,4 +36,3 @@ namespace ProjektDating.CustomLibraries
             }
         }
     }
-}
