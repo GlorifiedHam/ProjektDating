@@ -30,8 +30,8 @@ namespace ProjektDating.Controllers
                 string dateToday = DateTime.Now.ToString("M/dd/yyyy");
                 using (var db = new MainDbContext())
                 {
-                    Claim sessionUsername = ClaimsPrincipal.Current.FindFirst(ClaimTypes.Name);
-                    string userName = sessionUsername.Value;
+                    Claim sessionName = ClaimsPrincipal.Current.FindFirst(ClaimTypes.Name);
+                    string userName = sessionName.Value;
                     var userIdQuery = db.userModel.Where(u => u.Username == userName).Select(u => u.UserID);
                     var userId = userIdQuery.ToList();
                     string check_public = Request.Form["check_public"];
