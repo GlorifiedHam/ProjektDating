@@ -12,7 +12,7 @@ namespace ProjektDating.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        // GET: Auth
+        // GET: Account
         [HttpGet]
         public ActionResult Index()
         {
@@ -64,9 +64,9 @@ namespace ProjektDating.Controllers
                         "ApplicationCookie");
 
                     var ctx = Request.GetOwinContext();
-                    var authManager = ctx.Authentication;
+                    var AccountManager = ctx.Authentication;
 
-                    authManager.SignIn(identity);
+                    AccountManager.SignIn(identity);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -79,10 +79,10 @@ namespace ProjektDating.Controllers
         public ActionResult Logout()
         {
             var ctx = Request.GetOwinContext();
-            var authManager = ctx.Authentication;
+            var AccountManager = ctx.Authentication;
 
-            authManager.SignOut("ApplicationCookie");
-            return RedirectToAction("Login", "Auth");
+            AccountManager.SignOut("ApplicationCookie");
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult Registration()
